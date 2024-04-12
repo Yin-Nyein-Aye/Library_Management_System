@@ -12,6 +12,7 @@ use App\Models\Book;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Config;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 
 class BookController extends Controller
@@ -94,5 +95,38 @@ class BookController extends Controller
     public function destroy(Book $book)
     {
       return  $this->bookInterface->delete('Address', $book->id)? response(status:204): response(status:500);
+    }
+
+    public function borrow()
+    {
+        $books = Book::with('author','status','genre');
+        $books = $books->borrowBook()->orderBy('id','desc')->paginate(12);
+        return BookResource::collection($books);
+    }
+
+    public function return()
+    {
+        $books = Book::with('author','status','genre');
+        $books = $books->returnBook()->orderBy('id','desc')->paginate(12);
+        return BookResource::collection($books);
+    }
+
+    public function filter()
+    {
+        $filters = [
+            'author' => request('author'),
+            'genre' => request('genre'),
+            'title' => request('title'),
+        ];
+        $query = Book::SearchingBook($filters);
+        $filteredBooks = $query->get();
+        if ($filteredBooks->isEmpty()) {
+            return response()->json([
+                'message' => 'No book match the given criteria'
+            ], 200);
+        }
+        return response()->json([
+            "data" => BookResource::collection($filteredBooks)
+        ], 200);
     }
 }

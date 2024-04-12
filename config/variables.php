@@ -8,6 +8,6 @@ return [
     "TWENTY_THREE" => 23, "TWENTY_FOUR" => 24, "TWENTY_FIVE" => 25, "TWENTY_SIX" => 26,
     "TWENTY_SEVEN" => 27, "TWENTY_EIGHT" => 28, "TWENTY_NINE" => 29, "THIRTY" => 30,
     "THIRTY_ONE" => 31, "THIRTY_TWO" => 32, "THIRTY_THREE" => 33, "THIRTY_FOUR" => 34,
-    "THIRTY_FIVE" => 35, "USER" => "user", "ADMIN" => "admin", "BORROW" => "borrow", "RETURN" => "return", "AVAILABLE" => "available",
+    "THIRTY_FIVE" => 35, "USER" => "user", "ADMIN" => "admin", "BORROW" => "2", "RETURN" => "3", "AVAILABLE" => "1",
     "IMAGE" => "images", "IMAGE_MODEL" => "App\Models\Image",
 ];
