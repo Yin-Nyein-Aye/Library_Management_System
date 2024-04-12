@@ -32,7 +32,7 @@ class AuthController extends Controller
             $user = Auth::guard('api')->user();
 
             if ($user) {
-                PersonalAccessToken::where('tokenable_id', $user->id)->delete(); // Revoke a specific token
+                PersonalAccessToken::where('tokenable_id', $user->id)->delete();
             }
             return response()->json(['message' => 'Logged out successfully'], 200);
         } catch (\Exception $e) {
