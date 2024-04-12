@@ -16,6 +16,10 @@ class RepositoryServiceProvider extends ServiceProvider
             'App\Contracts\UserInterface',
             'App\Repositories\UserRepository'
         );
+        $this->app->bind(
+            'App\Contracts\BookInterface',
+            'App\Repositories\BookRepository'
+        );
     }
 
     /**

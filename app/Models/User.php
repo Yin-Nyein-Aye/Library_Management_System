@@ -10,6 +10,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
+use Illuminate\Support\Facades\Config;
 
 class User extends Authenticatable
 {
@@ -55,5 +56,15 @@ class User extends Authenticatable
             'password'=>IntegerField::new(),
             'dob' => StringField::new(),
         ];
+    }
+
+    public static function isAdmin()
+    {
+        $userid = auth()->user()->id;
+        $userDetais = User::find($userid);
+        if ($userDetais['role'] ===   Config::get('variables.ONE')) {
+            return true;
+        }
+        return false;
     }
 }
