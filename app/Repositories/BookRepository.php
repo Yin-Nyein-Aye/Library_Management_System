@@ -9,6 +9,7 @@ use App\Db\Core\Crud;
 use App\Models\Address;
 use App\Models\Book;
 use App\Models\User;
+use Illuminate\Support\Facades\Config;
 
 class BookRepository implements BookInterface
 {
@@ -21,6 +22,14 @@ class BookRepository implements BookInterface
     {
         $model = app("App\\Models\\{$modelName}");
         return $model::find($id);
+    }
+
+    public function findBorrowBook(string $modelName, int $id)
+    {
+        $model = app("App\\Models\\{$modelName}");
+        return $model::where('id',$id)
+                     ->where('status_id',Config::get('variables.BORROW'))
+                     ->first();
     }
 
     public function store(string $modelName, array $data)

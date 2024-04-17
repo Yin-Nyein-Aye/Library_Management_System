@@ -2,15 +2,17 @@
 
 namespace App\DB\Core;
 
-class IntegerField extends Field
+use Carbon\Carbon;
+
+class DateTimeField extends Field
 {
   public function execute()
   {
-    if ($this->value === null || $this->value === '') {
+    if (!$this->value) {
       return response()->json([
         "message" => "No Data Found"
       ]);
     }
-    return $this->value;
+    return Carbon::parse($this->value)->toDateTimeString();
   }
 }

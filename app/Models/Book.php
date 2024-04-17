@@ -2,13 +2,16 @@
 
 namespace App\Models;
 
+use App\DB\Core\DateTimeField;
 use App\DB\Core\IntegerField;
 use App\DB\Core\StringField;
+use Faker\Provider\ar_EG\Internet;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Support\Facades\Config;
+use Ramsey\Uuid\Type\Integer;
 
 class Book extends Model
 {
@@ -21,7 +24,9 @@ class Book extends Model
             'title' => StringField::new(),
             'author_id'=>IntegerField::new(),
             'genre_id'=>IntegerField::new(),
-            'status_id'=>IntegerField::new()
+            'status_id'=>IntegerField::new(),
+            'user_id' => IntegerField::new(),
+            'borrow_return_date' => DateTimeField::new()
         ];
     }
 
@@ -38,6 +43,11 @@ class Book extends Model
     public function status():BelongsTo
     {
         return $this->belongsTo(Status::class);
+    }
+
+    public function user():BelongsTo
+    {
+        return $this->belongsTo(User::class);
     }
 
     public function scopeBorrowBook(Builder $query):Builder

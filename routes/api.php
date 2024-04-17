@@ -18,10 +18,16 @@ use Illuminate\Support\Facades\Route;
 |
 */
 //User Route
-Route::post('/register', [UserController::class, 'store']);
-Route::post('/login', [AuthController::class, 'login']);
-Route::post('/logout', [AuthController::class, 'logout']);
-Route::get('/filter_book',[BookController::class, 'filter']);
+
+    Route::post('/register', [UserController::class, 'store']);
+    Route::post('/login', [AuthController::class, 'login']);
+
+Route::middleware('user')->group(function() {
+    Route::post('/logout', [AuthController::class, 'logout']);
+    Route::get('/filter_book',[BookController::class, 'filter']);
+    Route::get('/borrowBook/{id}',[BookController::class, 'borrowBook']);
+    Route::get('/returnBook/{id}',[BookController::class, 'returnBook']);
+});
 
 //Admin Route
 Route::middleware(['auth:sanctum', 'admin'])->group(function () {

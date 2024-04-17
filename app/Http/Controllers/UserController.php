@@ -53,10 +53,10 @@ class UserController extends Controller
             'password'=>'required|numeric|digits_between:4,6',
             'dob' => 'required'
         ]);
-
         if ($request->role === Config::get('variables.USER')) {
             $validatedData['role'] = $this->user;
-        } else if ($request->role === Config::get('variables.ADMIN')) {
+        }
+        elseif ($request->role === Config::get('variables.ADMIN')) {
             $validatedData['role'] = $this->admin;
         }
         $validatedData['password'] = Hash::make($request->password);
@@ -65,14 +65,12 @@ class UserController extends Controller
         if ($find_user) {
             return response()->json('Email is already exist');
         }
-        // dd($validatedData);
         $user = $this->userInterface->store('User', $validatedData);
         $return_data = new UserResource($user);
         return response()->json([
             'data' => $return_data,
             'message' => 'Successfully Registered',
         ], 200);
-
     }
 
     /**
